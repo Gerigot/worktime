@@ -1,9 +1,10 @@
 export const formatDuration = actualDuration => {
   let minutes = Math.abs(actualDuration.minutes());
+  let hours = Math.abs(actualDuration.hours());
   if (actualDuration.minutes() < 0) {
     return (
       "-" +
-      actualDuration.hours() +
+      hours +
       ":" +
       (minutes < 10 ? "0" + minutes : minutes)
     );
