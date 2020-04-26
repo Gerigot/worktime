@@ -1,5 +1,4 @@
 export const formatDuration = (actualDuration) => {
-	console.log({ actualDuration });
 	if (!actualDuration.isValid()) {
 		return '';
 	}
