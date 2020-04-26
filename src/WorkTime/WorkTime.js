@@ -91,6 +91,7 @@ export const WorkTime = (props) => {
 };
 
 const l = (m) => {
+	if (!m.isValid()) return '';
 	return m.format('HH:mm');
 };
 
