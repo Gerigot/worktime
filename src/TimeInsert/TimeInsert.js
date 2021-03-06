@@ -1,25 +1,29 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { createUseStyles } from 'react-jss';
 
 const useStyles = createUseStyles({
 	time: {
 		padding: 5,
-    fontSize: 'inherit',
-    fontFamily: 'inherit',
-    outline: 'none',
-    color: 'white',
-    backgroundColor: '#353535',
-    border: '2px solid #595959',
-    borderRadius: '5px'
+		fontSize: 'inherit',
+		fontFamily: 'inherit',
+		outline: 'none',
+		color: 'white',
+		backgroundColor: 'var(--input-bg-color)',
+		border: '2px solid var(--input-border-color)',
+		borderRadius: '5px',
+		marginBottom: '1em',
+		'&:focus': {
+			border: '2px solid var(--input-focus-border-color)'
+		}
 	}
 });
 function TimeInsert({ value, onChange, label }) {
 	const classes = useStyles();
 	return (
-		<>
+		<Fragment>
 			<div className={classes.label}>{label}</div>
 			<input className={classes.time} value={value} onChange={verifyValue(onChange)} />
-		</>
+		</Fragment>
 	);
 }
 

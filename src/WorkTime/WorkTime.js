@@ -7,24 +7,42 @@ import { createUseStyles } from 'react-jss';
 
 const useStyles = createUseStyles({
 	worktime_root: {
+		display: 'grid',
+		gridTemplateColumns: '100%',
+		gridTemplateAreas: `'title' 'timeInsert' 'timeShow'`,
 		fontFamily: (props) => `'${props.font}', sans-serif`
 	},
 	worktime_title: {
+		gridArea: 'title',
 		margin: '1.25em 0',
 		paggind: 0
 	},
 	workTime: {
+		gridArea: 'timeInsert',
 		display: 'grid',
-		gridTemplateColumns: 'minmax(180px, 300px) minmax(120px, 300px)',
+		gridTemplateColumns: 'minmax(180px, 300px)',
 		alignItems: 'center',
-		rowGap: '1em'
+		rowGap: '5px'
 	},
 
 	worktime_show_root: {
-		marginTop: '2.5em',
+		gridArea: 'timeShow',
+		marginTop: '1.5em',
 		display: 'grid',
-		gridTemplateColumns: 'minmax(180px, 300px) minmax(120px, 300px)',
-		rowGap: '1em'
+		gridTemplateColumns: 'minmax(180px, 300px)'
+	},
+	'@media only screen and (min-width: 800px)': {
+		worktime_root: {
+			gridTemplateColumns: '1fr 30px 1fr',
+			gridTemplateAreas: `'title title title'
+			'timeInsert . timeShow'`,
+			border: '1px solid rgba(0,0,0,0.5)',
+			borderRadius: 8,
+			boxShadow: '1px 1px 3px 0 var(--input-bg-color), -1px -1px 3px var(--input-border-color)',
+			marginTop: '0.5rem',
+			marginBottom: '0rem',
+			padding: '1rem'
+		}
 	}
 });
 
