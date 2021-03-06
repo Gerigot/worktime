@@ -36,9 +36,8 @@ const useStyles = createUseStyles({
 			gridTemplateColumns: '1fr 30px 1fr',
 			gridTemplateAreas: `'title title title'
 			'timeInsert . timeShow'`,
-			border: '1px solid rgba(0,0,0,0.5)',
 			borderRadius: 8,
-			boxShadow: '1px 1px 3px 0 var(--input-bg-color), -1px -1px 3px var(--input-border-color)',
+			boxShadow: '2px 2px 5px 0 var(--input-bg-color), -2px -2px 5px var(--input-border-color)',
 			marginTop: '0.5rem',
 			marginBottom: '0rem',
 			padding: '1rem'
