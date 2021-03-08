@@ -5,20 +5,10 @@ const useStyles = createUseStyles({
 	timeContainer:{
 		position: 'relative',
 		'&:focus-within > $label':{
-			position: 'absolute',
-			top: '-0.75em',
-			left: '1em',
-			fontSize: '0.5rem',
+			transform: 'translate(-.75em, -1em) scale(0.75, 0.75)',
 			zIndex: 2,
-			'&::before':{
-				content: '""',
-				position: 'absolute',
-				top: -10,
-				left: '-.5em',
-				right: '-.5em',
-				bottom: '0.25em',
-				background: 'var(--main-bg-color)',
-				zIndex: -1,
+			'&::before': {
+				opacity: 1,
 			}
 		}
 	},
@@ -36,39 +26,28 @@ const useStyles = createUseStyles({
 			border: '2px solid var(--input-focus-border-color)'
 		}
 	},
-	label: (props)=>{
-		const common = {
-			transition: 'top 250ms ease, left 250ms ease, font-size 250ms ease'
-		};
-		if(props.value){
-			return {
-				...common,
-				position: 'absolute',
-				top: '-0.75em',
-				left: '1em',
-				zIndex: 2,
-				fontSize: '0.5rem',
-				'&::before':{
-					content: '""',
-					position: 'absolute',
-					top: -10,
-					left: '-.5em',
-					right: '-.5em',
-					bottom: '0.25em',
-					background: 'var(--main-bg-color)',
-					zIndex: -1,
-				}
-			};
-		}
-		return {
-			...common,
+	label: {
+			transition: 'transform 250ms ease',
 			position: 'absolute',
-			fontSize: '0.8rem',
-			top: '0.5em',
-			left: '1em',
-			
-		}	
-	},
+			top: '0.25em',
+			left: '.75em',
+			zIndex: 2,
+			transform: ({value})=> value ? 'translate(-.85em, -1em) scale(0.75, 0.75)' : '',
+			'&::before':{
+				content: '""',
+				position: 'absolute',
+				top: '0',
+				left: '0',
+				right: '0',
+				bottom: '0',
+				background: 'linear-gradient(180deg, var(--main-bg-color), var(--input-bg-color))',
+				zIndex: -1,
+				transition: 'opacity 300ms ease',
+				opacity: ({value}) => value ? 1 :0,
+			},
+
+
+	}
 });
 function TimeInsert({ value, onChange, label }) {
 	const classes = useStyles({value});

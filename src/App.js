@@ -21,7 +21,7 @@ const useStyles = createUseStyles({
 			backgroundColor: 'var(--main-bg-color)',
 			color: 'var(--default-color)',
 			width: '100%',
-			maxWidth: 600
+			maxWidth: 700
 		},
 		'@media (min-width: 500px)': {
 			html: {
