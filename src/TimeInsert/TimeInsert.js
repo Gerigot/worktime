@@ -5,7 +5,7 @@ const useStyles = createUseStyles({
 	timeContainer:{
 		position: 'relative',
 		'&:focus-within > $label':{
-			transform: 'translate(-.75em, -1em) scale(0.75, 0.75)',
+			transform: 'translate(-.15em, -1em) scale(0.75, 0.75)',
 			zIndex: 2,
 			'&::before': {
 				opacity: 1,
@@ -30,9 +30,11 @@ const useStyles = createUseStyles({
 			transition: 'transform 250ms ease',
 			position: 'absolute',
 			top: '0.25em',
-			left: '.75em',
+			left: '.35em',
 			zIndex: 2,
-			transform: ({value})=> value ? 'translate(-.85em, -1em) scale(0.75, 0.75)' : '',
+			pointerEvents: 'none',
+			transformOrigin: 'left',
+			transform: ({value})=> value ? 'translate(-.15em, -1em) scale(0.75, 0.75)' : '',
 			'&::before':{
 				content: '""',
 				position: 'absolute',
