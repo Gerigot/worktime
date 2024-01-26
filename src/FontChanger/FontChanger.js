@@ -24,6 +24,7 @@ export const FontChanger = ({ onChange, value }) => {
 				onChange={(event) => onChange(event.target.value)}
 				value={value}
 			>
+				<option value="system-ui">System-ui</option>
 				<option value="Open Sans">Open Sans</option>
 				<option value="Montserrat">Montserrat</option>
 				<option value="Lato">Lato</option>
