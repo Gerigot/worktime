@@ -47,13 +47,16 @@ const useStyles = createUseStyles({
 
 export const WorkTime = (props) => {
 	const classes = useStyles(props);
-	const [ times, setTimes ] = useStateWithLocalStorage('time', {
+
+	const [dueTime, setDueTime] = useState({'label': '8h', value: '8:00'})
+
+	const [times, setTimes] = useStateWithLocalStorage('time', {
 		morning: '',
 		startPause: '',
 		endPause: ''
 	});
 
-	const [ results, setResults ] = useState({
+	const [results, setResults] = useState({
 		atTheMoment: '',
 		normally: '',
 		max: '',
@@ -62,48 +65,56 @@ export const WorkTime = (props) => {
 
 	useEffect(
 		() => {
-			calculateTime(times.morning, times.startPause, times.endPause, setResults);
+			calculateTime(times.morning, times.startPause, times.endPause, setResults, dueTime.value);
 		},
-		[ times.endPause, times.morning, times.startPause ]
+		[times.endPause, times.morning, times.startPause, dueTime]
 	);
 
 	useInterval(() => {
-		calculateTime(times.morning, times.startPause, times.endPause, setResults);
+		calculateTime(times.morning, times.startPause, times.endPause, setResults, dueTime.value);
 	}, 10000);
 
 	return (
-		<div className={classes.worktime_root}>
-			<h1 className={classes.worktime_title}>Work Time!</h1>
-			<div className={classes.workTime}>
-				<TimeInsert
-					label="Inizio:"
-					value={times.morning}
-					onChange={(value) => {
-						setTimes({ ...times, morning: value });
-					}}
-				/>
-				<TimeInsert
-					label="Inizio pausa:"
-					value={times.startPause}
-					onChange={(value) => {
-						setTimes({ ...times, startPause: value });
-					}}
-				/>
-				<TimeInsert
-					label="Fine pausa:"
-					value={times.endPause}
-					onChange={(value) => {
-						setTimes({ ...times, endPause: value });
-					}}
-				/>
+		<>
+			<div>
+				<input type="radio" id="8h" name="due_time" value="8:00" onChange={e=>setDueTime({label: '8h', value:e.target.value})}></input>
+				<label htmlFor="eight">8h</label>
+				<input type="radio" id="8h24" name="due_time" value="8:24" onChange={e=>setDueTime({label: '8h 24m', value:e.target.value})}></input>
+				<label htmlFor="8h24">8h24m</label>
 			</div>
-			<div className={classes.worktime_show_root}>
-				<ShowTime label="Al momento hai fatto" value={results.atTheMoment} />
-				<ShowTime label="Pausa pranzo" value={results.pause} />
-				<ShowTime label="8h alle" value={results.normally} />
-				<ShowTime label="P.f. finisci prima delle" value={results.max} />
+			<div className={classes.worktime_root}>
+				<h1 className={classes.worktime_title}>Work Time!</h1>
+				<div className={classes.workTime}>
+					<TimeInsert
+						label="Inizio:"
+						value={times.morning}
+						onChange={(value) => {
+							setTimes({ ...times, morning: value });
+						}}
+					/>
+					<TimeInsert
+						label="Inizio pausa:"
+						value={times.startPause}
+						onChange={(value) => {
+							setTimes({ ...times, startPause: value });
+						}}
+					/>
+					<TimeInsert
+						label="Fine pausa:"
+						value={times.endPause}
+						onChange={(value) => {
+							setTimes({ ...times, endPause: value });
+						}}
+					/>
+				</div>
+				<div className={classes.worktime_show_root}>
+					<ShowTime label="Al momento hai fatto" value={results.atTheMoment} />
+					<ShowTime label="Pausa pranzo" value={results.pause} />
+					<ShowTime label={`${dueTime.label} alle`} value={results.normally} />
+					<ShowTime label="P.f. finisci prima delle" value={results.max} />
+				</div>
 			</div>
-		</div>
+		</>
 	);
 };
 
@@ -112,13 +123,13 @@ const l = (m) => {
 	return m.format('HH:mm');
 };
 
-function calculateTime(begin, startPause, endPause, setResults) {
+function calculateTime(begin, startPause, endPause, setResults, dueTime) {
 	const mBegin = moment(begin, 'HH:mm');
 	const mStartPause = moment(startPause, 'HH:mm');
 	const minPause = mStartPause.clone().add(30, 'm');
 	const mTEndPause = moment(endPause, 'HH:mm');
 	const mEndPause = moment.max(minPause, mTEndPause);
-	const totalDue = moment.duration(8, 'hours');
+	const totalDue = moment.duration(dueTime, 'HH:mm');
 	const morningD = moment.duration(mStartPause.diff(mBegin));
 	const actualDuration = moment.duration(moment().diff(mEndPause)).add(morningD);
 	const left = totalDue.clone().subtract(morningD);
@@ -143,7 +154,7 @@ function useInterval(callback, delay) {
 		() => {
 			savedCallback.current = callback;
 		},
-		[ callback ]
+		[callback]
 	);
 
 	// Set up the interval.
@@ -157,6 +168,6 @@ function useInterval(callback, delay) {
 				return () => clearInterval(id);
 			}
 		},
-		[ delay ]
+		[delay]
 	);
 }
