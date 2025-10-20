@@ -21,7 +21,6 @@ jobs:
           registry-url: https://npm.pkg.github.com/
       - run: npm ci
       - run: npm run predeploy
-      # 👈 NUOVO PASSO: Configura l'identità Git per il commit di gh-pages
       - name: Configure Git User
         run: |
           git config user.email "github-actions[bot]@users.noreply.github.com"
